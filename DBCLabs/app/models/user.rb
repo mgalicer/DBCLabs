@@ -1,10 +1,9 @@
 class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
-  validates :password, length: { minimum: 6 }
+  validate :password_length
 
   require 'bcrypt'
 
-    # users.password_hash in the database is a :string
   include BCrypt
 
   def password
@@ -12,7 +11,30 @@ class User < ActiveRecord::Base
   end
 
   def password=(new_password)
+    @raw_password = new_password
     @password = Password.create(new_password)
     self.password_hash = @password
   end
+
+  def self.authenticate(params)
+    user = self.find_by(name: params[:name])
+    if user.password == params[:password]
+      user
+    else
+      nil
+    end
+  end
+
+  private
+    def raw_password
+      @raw_password ||  ""
+    end
+
+    def password_length
+      if raw_password || new_record?
+        if raw_password.length < 6
+           errors.add(:password, "Must be at least 6 characters long!")
+        end
+      end
+    end
 end

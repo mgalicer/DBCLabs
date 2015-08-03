@@ -1,0 +1,11 @@
+<% if @errors %>
+  <%= @errors %>
+<% end %>
+
+<%= form_for :user, url: sessions_path do |f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+  <%= f.label :password %><br>
+  <%= f.password_field :password %>
+  <%= f.submit "Login"%>
+<% end %>
