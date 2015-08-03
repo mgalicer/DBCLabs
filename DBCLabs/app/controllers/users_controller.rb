@@ -5,10 +5,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user_options = ["faculty", "lab staff"]
+
     if @user.save
-      redirect_to @user
+      redirect_to root_path
     else
-      @errors = @user.errors.full_messages
+      # @errors = @user.errors.full_messages
       render "new"
     end
   end
