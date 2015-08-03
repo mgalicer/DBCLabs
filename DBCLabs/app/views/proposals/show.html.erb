@@ -10,4 +10,15 @@
 
 </div>
 
+<% if @proposal.experiments.length > 0 %>
+  <h4>Current experiments based on this proposal:</h4>
+  <% @proposal.experiments.each do |experiment| %>
+    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %>
+  <% end %>
+<% end %>
+<br>
+<br>
+<div id="new-experiment-link">
+<%= link_to "Create New Experiment", new_proposal_experiment_path(@proposal) %>
+</div>
 

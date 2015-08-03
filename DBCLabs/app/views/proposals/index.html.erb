@@ -19,13 +19,9 @@
      <% end %>
      </ul>
 
-     <% if current_user.user_type == "faculty" %>
-      <h3><%= link_to "Profile Page", user_path(current_user) %></h3>
-      <% else %>
-      <h3>Ayyy!!!!</h3>
-     <% end %>
 
-     <% p current_user %>
+      <h3><%= link_to "Profile Page", user_path(current_user) %></h3>
+
 
 
 </div>
