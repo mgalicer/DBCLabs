@@ -1,0 +1,8 @@
+<div class="container">
+<% @experiments.each do |e| %>
+<ul>
+  <li><%= link_to e.title, proposal_experiment_path(e.proposal, e) %></li>
+
+</ul>
+ <% end %>
+</div>

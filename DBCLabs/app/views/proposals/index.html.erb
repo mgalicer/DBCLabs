@@ -1,0 +1,12 @@
+<div class="container">
+  <h3>Welcome to Washington University's Public Health Fund</h3>
+
+
+    <ul id="experiment-list">
+
+    <% @experiments.each do |e| %>
+      <li><%= link_to e.title, proposal_experiment_path(e.proposal, e) %></li>
+     <% end %>
+     </ul>
+
+</div>
