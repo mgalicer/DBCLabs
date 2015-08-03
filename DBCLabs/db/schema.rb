@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
+ActiveRecord::Schema.define(version: 20150803150153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
@@ -31,14 +30,14 @@
   create_table "experiments", force: :cascade do |t|
     t.string   "title"
     t.text     "materials"
-    t.text     "proceduress"
+    t.text     "procedures"
     t.text     "observations"
     t.text     "results"
     t.text     "conclusion"
     t.integer  "proposal_id"
-    t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "experimenter_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "proposals", force: :cascade do |t|
@@ -48,6 +47,7 @@
     t.integer  "proposer_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "user_type"
@@ -56,7 +56,6 @@
     t.string   "password_hash"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-
   end
 
 end

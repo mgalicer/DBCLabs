@@ -3,12 +3,12 @@ class CreateExperiments < ActiveRecord::Migration
     create_table :experiments do |t|
       t.string :title
       t.text :materials
-      t.text :proceduress
+      t.text :procedures
       t.text :observations
       t.text :results
       t.text :conclusion
       t.references :proposal
-      t.references :user
+      t.references :experimenter
 
       t.timestamps null: false
     end

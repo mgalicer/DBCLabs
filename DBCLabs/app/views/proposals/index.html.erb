@@ -1,2 +1,7 @@
-;)
-ra
+<div class="container">
+<% @experiments.each do |e| %>
+<ul>
+  <li><a href="#"><%= e.title  %><br></a> </li>
+</ul>
+ <% end %>
+</div>
