@@ -1,12 +1,31 @@
 <div class="container">
   <h3>Welcome to Washington University's Public Health Fund</h3>
 
-
+  <h4>Most recent experiments:</h4>
     <ul id="experiment-list">
 
     <% @experiments.each do |e| %>
       <li><%= link_to e.title, proposal_experiment_path(e.proposal, e) %></li>
      <% end %>
      </ul>
+
+
+
+    <h4>List of All Proposals</h4>
+
+     <ul id="proposal-list">
+    <% @proposals.each do |proposal| %>
+       <li><%= link_to proposal.title, proposal_path(proposal) %></li>
+     <% end %>
+     </ul>
+
+     <% if current_user.user_type == "faculty" %>
+      <h3><%= link_to "Profile Page", user_path(current_user) %></h3>
+      <% else %>
+      <h3>Ayyy!!!!</h3>
+     <% end %>
+
+     <% p current_user %>
+
 
 </div>
