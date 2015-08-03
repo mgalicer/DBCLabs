@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# prop1 = Proposal.create(title: "The meaning of Life", hypothesis: "The dude abides", summary: "Toke, bowl, clean rug", proposer: user1)
