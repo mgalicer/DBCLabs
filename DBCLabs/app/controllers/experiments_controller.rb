@@ -7,10 +7,7 @@ class ExperimentsController < ApplicationController
 
     def show
       @proposal = Proposal.find(params[:proposal_id])
-      p @proposal
-      # @experiments = Experiment.where(proposal_id: proposal.id)
-      @experiments = @proposal.experiments.all
-      @comments = @proposal.comments.all
+      @experiment = Experiment.find(params[:id])
     end
 
     def create

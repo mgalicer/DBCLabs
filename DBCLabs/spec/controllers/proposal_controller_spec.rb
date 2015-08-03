@@ -27,6 +27,6 @@ describe ProposalsController do
   #     p game.to_param
   #     get :show, {id: game.to_param}
   #     expect(assigns(:loser_throw)).to eq(game.loser_throw)
-  #   end
+    end
   end
 
