@@ -8,7 +8,6 @@ class ProposalsController < ApplicationController
   def show
     @proposal = Proposal.find(params[:id])
     p @proposal
-    # @experiments = Experiment.where(proposal_id: proposal.id)
     @experiments = @proposal.experiments.all
     @comments = @proposal.comments.all
   end
