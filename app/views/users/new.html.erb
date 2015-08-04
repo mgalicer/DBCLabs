@@ -1,0 +1,17 @@
+<% if @user %>
+  <% @user.errors.full_messages.each do |msg| %>
+    <p>error: <%= msg %></p>
+  <% end %>
+<% end %>
+
+<%= form_for :user, url: users_path do |f| %>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+  <%= f.label :type %><br>
+  <%= f.select(:user_type, @user_options) %><br>
+  <%=f.label :email %><br>
+  <%= f.text_field :email %><br>
+  <%= f.label :password %><br>
+  <%= f.password_field :password %>
+  <%= f.submit "Register"%>
+<% end %>
