@@ -1,4 +1,9 @@
-<% @comments.each do |comment| %>
-  <p><%= comment.commenter %></p>
-  <p><%= comment.content %></p>
+<% if @comments %>
+  <% @comments.each do |comment| %>
+    <div class="comment">
+      <p><%= comment.commenter.name %></p>
+      <p><%= comment.content %></p>
+    </div>
+  <% end %>
 <% end %>
+

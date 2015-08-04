@@ -1,5 +1,5 @@
 <h1>What would you like to say?</h1>
-<%= form_for [@proposal, @comment = Comment.new] do |f| %>
+<%= form_for [@commentable, @comment = Comment.new] do |f| %>
   <%= f.text_area :content %> <br>
   <%= f.submit %>
 <% end %>
