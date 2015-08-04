@@ -1,15 +1,5 @@
-<nav>
-  <div class="nav-wrapper">
-    <a href="/" class="brand-logo">WU</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/users/<%= current_user.id %>">Profile</a></li>
-      <li><a href="/proposals">Proposals</a></li>
-      <li><a href="/experiments">Experiments</a></li>
-    </ul>
-  </div>
-</nav>
-
 <div class="container">
+<% if current_user %>
   <h1>10 Most Recent Experiments</h1>
   <% @experiments.each_with_index do |e, i| %>
   <ul>
@@ -25,4 +15,5 @@
 
   </ul>
    <% end %>
+<% end %>
 </div>
