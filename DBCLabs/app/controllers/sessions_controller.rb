@@ -2,13 +2,14 @@ class SessionsController < ApplicationController
   before_action :find_user, except: [:new]
 
   def new
+    p current_user
   end
 
   def create
      @user = User.authenticate(params[:user])
     if @user
       session[:user_id]  = @user.id
-      redirect_to root_path
+      redirect_to experiments_path
     else
       @errors = "Your username/password combination is incorrect!"
       render 'new'
