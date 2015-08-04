@@ -12,7 +12,25 @@ class ProposalsController < ApplicationController
     @comments = @proposal.comments.all
   end
 
+  def new
+    @proposal = Proposal.new
+  end
+
   def create
+    user = User.find(session[:user_id])
+    @proposal = Proposal.new(proposal_params)
+    @proposal.proposer = user
+    if @proposal.save
+      redirect_to @proposal
+    else
+      render :new
+    end
+  end
+
+
+private
+  def proposal_params
+    params.require(:proposal).permit(:title, :hypothesis, :summary)
   end
 
 end
