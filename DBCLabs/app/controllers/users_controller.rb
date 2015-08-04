@@ -8,7 +8,8 @@ class UsersController < ApplicationController
     @user_options = ["faculty", "lab staff"]
 
     if @user.save
-      redirect_to root_path
+      session[:user_id] = @user.id
+      redirect_to experiments_path
     else
       # @errors = @user.errors.full_messages
       render "new"
