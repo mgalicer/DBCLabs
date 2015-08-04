@@ -2,26 +2,27 @@
 
   <h3>Experiment Overview:</h3>
 
-<p>Title:</p>
+<label>Title:</label>
 <p><%= @experiment.title %></p>
 
-<p>Materials:</p>
+<label>Materials:</label>
 <p><%= @experiment.materials %></p>
-<p>Observations:</p>
+<label>Observations:</label>
 <p><%= @experiment.observations %></p>
-<p>Results:</p>
+<label>Results:</label>
 <p><%= @experiment.results %></p>
-<p>Conclusion:</p>
+<label>Conclusion:</label>
 <p><%= @experiment.conclusion %></p>
-<p>Results:</p>
+<label>Results:</label>
 <p><%= @experiment.results %></p>
 
   <div class="experiment-footer">
-    <p>This is based off of the following Proposal:</p>
+    <label>This is based off of the following Proposal:</label>
     <p><%= @experiment.proposal.title %></p>
-    <p>Expirement Lead:</p>
+    <label>Experiment Lead:</label>
     <p><%= @experiment.experimenter.name %></p>
-    <p>Experiment Status:</p>
+    <label>Experiment Status:</label>
     <p><%= @experiment.created_at %></p>
   </div>
 </div>
+<div class=></div>

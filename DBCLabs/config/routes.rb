@@ -11,7 +11,17 @@ Rails.application.routes.draw do
       resources :experiments
     end
 
+    resources :experiments do
+      resources :comments
+    end
 
+    resources :proposals do
+      resources :comments
+    end
+
+    resources :comments do
+      resources :comments
+    end
 
 
   # Example of regular route:
