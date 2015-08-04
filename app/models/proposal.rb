@@ -4,4 +4,7 @@ class Proposal < ActiveRecord::Base
   has_many :experiments
   has_many :comments, as: :commentable
 
+  def base_commentable
+    self
+  end
 end
