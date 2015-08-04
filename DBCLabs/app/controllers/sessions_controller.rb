@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :find_user, except: [:new]
+  before_action :find_user, except: [:new, :destroy]
 
   def new
     p current_user
