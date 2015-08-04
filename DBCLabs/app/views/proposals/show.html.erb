@@ -3,7 +3,6 @@
 <h3>Proposal Overview:</h3>
 <p><%= @proposal.title %></p>
 <p><%= @proposal.hypothesis %></p>
-<p><%= @proposal.title %></p>
 <p><%= @proposal.summary %></p>
 <p><%= @proposal.created_at %></p>
 <p><%= @proposal.proposer.name %></p>
@@ -13,7 +12,7 @@
 <% if @proposal.experiments.length > 0 %>
   <h4>Current experiments based on this proposal:</h4>
   <% @proposal.experiments.each do |experiment| %>
-    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %>
+    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %><br>
   <% end %>
 <% end %>
 <br>
