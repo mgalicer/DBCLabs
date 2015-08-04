@@ -1,9 +1,8 @@
-
-<h3>Experiment Overview:</h3>
-
-<label>Title:</label>
-<p><%= @experiment.title %></p>
-
+<br>
+<h5><%= @experiment.title %></h5>
+<p style = "color:grey;">by <%= @experiment.experimenter.name %>&nbsp;|&nbsp;<%= @experiment.created_at.strftime("%F") %></p>
+<p></p>
+<br>
 <label>Materials:</label>
 <p><%= @experiment.materials %></p>
 <label>Observations:</label>
@@ -18,14 +17,11 @@
 <div class="experiment-footer">
   <label>This is based off of the following Proposal:</label>
   <p><%= @experiment.proposal.title %></p>
-  <label>Experiment Lead:</label>
-  <p><%= @experiment.experimenter.name %></p>
-  <label>Experiment Status:</label>
-  <p><%= @experiment.created_at %></p>
 </div>
 
 
-
+<br>
 <%= link_to "New comment", new_experiment_comment_path(@experiment) %>
+<h5>Comments</h5>
 <%= render partial: 'comments/show' %>
 

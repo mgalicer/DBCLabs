@@ -2,16 +2,18 @@
 
 
   <div id="10-experiments">
-  <h3>10 Most Recent Experiments</h3>
+    <br>
+    <br>
+  <h5>10 Most Recent Experiments</h5>
   <% @experiments.each_with_index do |e, i| %>
   <ul>
 
     <li><%= link_to e.title, proposal_experiment_path(e.proposal, e) %></li>
     <% if i == 9 %>
-    <br>
-      <hr>
+      <br>
+      <br>
 
-      <h3>Older Experiments</h3>
+      <h5>Older Experiments</h5>
     <% end %>
 
 
