@@ -7,7 +7,7 @@ class ExperimentsController < ApplicationController
 
     def show
       @proposal = Proposal.find(params[:proposal_id])
-      @experiment = Experiment.find(params[:id])
+      @experiment = Experiment.find(experiment_params)
     end
 
     def new
