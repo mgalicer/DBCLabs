@@ -1,0 +1,974 @@
+  [1m[36m (114.4ms)[0m  [1mDROP DATABASE IF EXISTS "DBCLabs_test"[0m
+  [1m[35m (244.4ms)[0m  CREATE DATABASE "DBCLabs_test" ENCODING = 'unicode'
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (6.1ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "content" text, "commenter_id" integer, "commentable_id" integer, "commentable_type" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX  "index_comments_on_commentable_type_and_commentable_id" ON "comments" USING btree ("commentable_type", "commentable_id")[0m
+  [1m[35m (3.1ms)[0m  CREATE TABLE "experiments" ("id" serial primary key, "title" character varying, "materials" text, "procedures" text, "observations" text, "results" text, "conclusion" text, "proposal_id" integer, "experimenter_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (3.2ms)[0m  [1mCREATE TABLE "proposals" ("id" serial primary key, "title" character varying, "hypothesis" text, "summary" text, "proposer_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (2.8ms)[0m  CREATE TABLE "users" ("id" serial primary key, "user_type" character varying, "name" character varying, "email" character varying, "password_hash" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.3ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20150803150153')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20150803143309')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20150803144129')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20150803144321')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (1.0ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$C7whU0cUGGHFqGHUbPoy7eYfycR9ATDTQqE2d9sPRoufdRUea9XMC"], ["created_at", "2015-08-03 19:10:40.646728"], ["updated_at", "2015-08-03 19:10:40.646728"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$GUpWyPZJoKGpokFJ5v/AG.i4BIxfE4umxAGljNuscbIy4yuliFO0y"], ["created_at", "2015-08-03 19:11:20.035829"], ["updated_at", "2015-08-03 19:11:20.035829"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 2], ["created_at", "2015-08-03 19:11:20.056661"], ["updated_at", "2015-08-03 19:11:20.056661"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 55ms (Views: 49.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$t67j5pgGAFvPiWFralYTdu/ZrVKHm6wNsufEZ8CGEQ9/2dCKIxq72"], ["created_at", "2015-08-03 20:31:13.449876"], ["updated_at", "2015-08-03 20:31:13.449876"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 3], ["created_at", "2015-08-03 20:31:13.472602"], ["updated_at", "2015-08-03 20:31:13.472602"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 50ms (Views: 47.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$jcannPb4oidxdRQ4qASsUeyYfQaypr6h.j6bEN1VOTLpIGBtmvhSW"], ["created_at", "2015-08-03 20:31:13.604844"], ["updated_at", "2015-08-03 20:31:13.604844"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 4], ["created_at", "2015-08-03 20:31:13.607375"], ["updated_at", "2015-08-03 20:31:13.607375"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mProposal Load (0.5ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", nil]]
+Completed 404 Not Found in 6ms (ActiveRecord: 0.5ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/proposals" for 127.0.0.1 at 2015-08-03 15:31:13 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.2ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 831ms (Views: 828.2ms | ActiveRecord: 2.1ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$OhZgJzCaoyaI0AkUKid8dOq1H642w99Qp.RvlvHxrK1KR5LpQOlUy"], ["created_at", "2015-08-03 20:33:07.944514"], ["updated_at", "2015-08-03 20:33:07.944514"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 5], ["created_at", "2015-08-03 20:33:07.967046"], ["updated_at", "2015-08-03 20:33:07.967046"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 50ms (Views: 45.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$TuLE7jtiubuT0X3LFZCAzuzws7pisWuura6CJ6.jRrgTYpHrW2aEy"], ["created_at", "2015-08-03 20:33:08.101799"], ["updated_at", "2015-08-03 20:33:08.101799"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 6], ["created_at", "2015-08-03 20:33:08.104728"], ["updated_at", "2015-08-03 20:33:08.104728"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 5]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/proposals" for 127.0.0.1 at 2015-08-03 15:33:08 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 194ms (Views: 192.9ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$UZAfijU3ReySRhhlIsKcg.zPKkDUOaOhL8QTw/JlG4nagdM.mpObq"], ["created_at", "2015-08-03 20:34:05.972855"], ["updated_at", "2015-08-03 20:34:05.972855"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 7], ["created_at", "2015-08-03 20:34:05.996590"], ["updated_at", "2015-08-03 20:34:05.996590"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 52ms (Views: 48.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$iYYGEhEvI.bcLkzF3JacXu056XPbAvNGb0As7dZFKx/dcupnyX1Fe"], ["created_at", "2015-08-03 20:34:06.131461"], ["updated_at", "2015-08-03 20:34:06.131461"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 8], ["created_at", "2015-08-03 20:34:06.134730"], ["updated_at", "2015-08-03 20:34:06.134730"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 7]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:34:06 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.7ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 196ms (Views: 194.5ms | ActiveRecord: 0.7ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$TbIhPmZo.A5YtFFgJXITdOL4hoNO/EYvm9Gm4Xh/V4jvY28TIfANu"], ["created_at", "2015-08-03 20:37:06.147463"], ["updated_at", "2015-08-03 20:37:06.147463"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 9], ["created_at", "2015-08-03 20:37:06.170419"], ["updated_at", "2015-08-03 20:37:06.170419"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 51ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$Ich5IEhsWdt8TCoxfw/ObOuQAXHzGiVNn7lDg89m2YinRcfQ1tJkm"], ["created_at", "2015-08-03 20:37:06.309405"], ["updated_at", "2015-08-03 20:37:06.309405"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 10], ["created_at", "2015-08-03 20:37:06.312120"], ["updated_at", "2015-08-03 20:37:06.312120"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 9]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.6ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:37:06 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.7ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 257ms (Views: 255.5ms | ActiveRecord: 0.7ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:37:06 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$790No8jIFje2cBy9zz81Be4DZItJRD5Fz0PB0xBKm7jcfi.IktCmu"], ["created_at", "2015-08-03 20:38:27.169446"], ["updated_at", "2015-08-03 20:38:27.169446"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 11], ["created_at", "2015-08-03 20:38:27.189491"], ["updated_at", "2015-08-03 20:38:27.189491"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 49ms (Views: 45.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$qZ.9q1OV6/h1sDQwD30tE.Sl8RtuzLXGo9n4/GH.4KP/JMR/R0/oi"], ["created_at", "2015-08-03 20:38:27.322247"], ["updated_at", "2015-08-03 20:38:27.322247"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 12], ["created_at", "2015-08-03 20:38:27.325143"], ["updated_at", "2015-08-03 20:38:27.325143"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 11]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:38:27 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 256ms (Views: 255.4ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:38:27 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$YFznfEZ8Ku9FsK5QRVTYDeGPtUcBiC6IuNDsTUAL4Risl7b1XVHqO"], ["created_at", "2015-08-03 20:39:13.818488"], ["updated_at", "2015-08-03 20:39:13.818488"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 13], ["created_at", "2015-08-03 20:39:13.840642"], ["updated_at", "2015-08-03 20:39:13.840642"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 50ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$3JTAM0lBiRI/Qr088QOGVeSH.9iYMQGQ/q5AWI5mn7c5G0HoLfiBq"], ["created_at", "2015-08-03 20:39:13.971787"], ["updated_at", "2015-08-03 20:39:13.971787"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 14], ["created_at", "2015-08-03 20:39:13.975030"], ["updated_at", "2015-08-03 20:39:13.975030"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 13]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:39:13 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 243ms (Views: 241.5ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:39:14 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.4ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$Q7iT7JET2ukiLaWmN/u7J.d6Mgp31T6ymdXtPUyfobf501RRGo2lW"], ["created_at", "2015-08-03 20:39:42.503070"], ["updated_at", "2015-08-03 20:39:42.503070"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 15], ["created_at", "2015-08-03 20:39:42.524822"], ["updated_at", "2015-08-03 20:39:42.524822"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 49ms (Views: 45.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$kCL3xJ4o5rrpUPWr1L25POfEq3iSjkPdVxgMfpX0JQND9fEFRfNDS"], ["created_at", "2015-08-03 20:39:42.655243"], ["updated_at", "2015-08-03 20:39:42.655243"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 16], ["created_at", "2015-08-03 20:39:42.657788"], ["updated_at", "2015-08-03 20:39:42.657788"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"15"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 15]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:39:42 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 256ms (Views: 254.9ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:39:42 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.5ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.5ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$gMCGj4jnnjSEghdgzP.XHOkntHzH8QQG33Sq7CqPYW8Vq1d4qrCwq"], ["created_at", "2015-08-03 20:41:33.255181"], ["updated_at", "2015-08-03 20:41:33.255181"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 17], ["created_at", "2015-08-03 20:41:33.277385"], ["updated_at", "2015-08-03 20:41:33.277385"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 52ms (Views: 47.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$U48ufh9o5Z.3KyBdaqWXk.7DRcpeIT1FSeV6Jijj.iJCZyTwP.X6C"], ["created_at", "2015-08-03 20:41:33.413021"], ["updated_at", "2015-08-03 20:41:33.413021"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 18], ["created_at", "2015-08-03 20:41:33.415765"], ["updated_at", "2015-08-03 20:41:33.415765"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"17"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 17]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.4ms | ActiveRecord: 1.9ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:41:33 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 251ms (Views: 250.0ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:41:33 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.4ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$SgMZcyLC/hHEO7sp20aesOZ0dYMNkX6HtefICzlMk/7yv07IuHcuC"], ["created_at", "2015-08-03 20:42:03.537840"], ["updated_at", "2015-08-03 20:42:03.537840"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 19], ["created_at", "2015-08-03 20:42:03.561287"], ["updated_at", "2015-08-03 20:42:03.561287"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 52ms (Views: 48.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$bX/jaicbbmgYBXJJemUfAeWA9jwjIdZR6pZ5i2MW2qSVcv0vheBgm"], ["created_at", "2015-08-03 20:42:03.699002"], ["updated_at", "2015-08-03 20:42:03.699002"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 20], ["created_at", "2015-08-03 20:42:03.702817"], ["updated_at", "2015-08-03 20:42:03.702817"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"19"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 19]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:42:03 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.1ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (3.6ms)
+Completed 200 OK in 250ms (Views: 248.5ms | ActiveRecord: 1.1ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:42:03 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$CDa/OLDcmFNMwr0DYD5MFOPRLtoEKSxJ8XqLLEIj/nsvCGNuLXey2"], ["created_at", "2015-08-03 20:42:53.410355"], ["updated_at", "2015-08-03 20:42:53.410355"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 21], ["created_at", "2015-08-03 20:42:53.433476"], ["updated_at", "2015-08-03 20:42:53.433476"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 53ms (Views: 49.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$.Q975dHiM4BkthekI2p9o.n1rM/bLL0d2//SxMWMANi65MAx.0g0a"], ["created_at", "2015-08-03 20:42:53.569153"], ["updated_at", "2015-08-03 20:42:53.569153"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 22], ["created_at", "2015-08-03 20:42:53.571618"], ["updated_at", "2015-08-03 20:42:53.571618"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"21"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 21]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 21ms (Views: 1.5ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:42:53 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.5ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 267ms (Views: 264.5ms | ActiveRecord: 1.5ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:42:53 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.4ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$yhBfNAHNuzUEeAohiydtyu9lS3/bKxkqHcxQE/niDIuON.GMUjP/q"], ["created_at", "2015-08-03 20:43:09.180844"], ["updated_at", "2015-08-03 20:43:09.180844"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 23], ["created_at", "2015-08-03 20:43:09.203201"], ["updated_at", "2015-08-03 20:43:09.203201"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 52ms (Views: 48.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.6ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$yto8aOFM.SNuC5y9U07meOWuLe/73ZMRJFL7frgW5W442WKpkUi76"], ["created_at", "2015-08-03 20:43:09.338641"], ["updated_at", "2015-08-03 20:43:09.338641"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 24], ["created_at", "2015-08-03 20:43:09.342258"], ["updated_at", "2015-08-03 20:43:09.342258"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"23"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 23]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.5ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:43:09 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 243ms (Views: 241.7ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:43:09 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (1.1ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$FMSqtlAB79knK2S5pa/FSuE7EZtdFyj/foqlhqnNcoLVhKvOIv2hS"], ["created_at", "2015-08-03 20:44:03.669413"], ["updated_at", "2015-08-03 20:44:03.669413"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 25], ["created_at", "2015-08-03 20:44:03.691232"], ["updated_at", "2015-08-03 20:44:03.691232"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 52ms (Views: 47.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$GomGqVfkJAYRZ2GA8zNiHuZOG83SRCsUcOdBzrgy.NURygnJcpnHO"], ["created_at", "2015-08-03 20:44:03.828931"], ["updated_at", "2015-08-03 20:44:03.828931"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 26], ["created_at", "2015-08-03 20:44:03.831480"], ["updated_at", "2015-08-03 20:44:03.831480"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"25"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 25]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.9ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:03 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 251ms (Views: 250.0ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:04 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.4ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (1.2ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$NLGl8o0o39OUSs.cboJ7FuupmrNSM.7uM5IP.SzPpmAGarURjcioO"], ["created_at", "2015-08-03 20:44:40.734784"], ["updated_at", "2015-08-03 20:44:40.734784"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 27], ["created_at", "2015-08-03 20:44:40.754541"], ["updated_at", "2015-08-03 20:44:40.754541"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 50ms (Views: 46.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$CUJWVu/KA/1ymtBa.a5IaOL7Yaq078N3Bsc5WPzCXXJHuccjvLQTi"], ["created_at", "2015-08-03 20:44:40.888209"], ["updated_at", "2015-08-03 20:44:40.888209"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 28], ["created_at", "2015-08-03 20:44:40.890831"], ["updated_at", "2015-08-03 20:44:40.890831"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"27"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 27]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:40 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 249ms (Views: 248.3ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:41 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$gGXbf0xrkwIPL2QyyBe7DeBmO.5P8OYeZddONWZXjICpztCOr3l/q"], ["created_at", "2015-08-03 20:44:54.035123"], ["updated_at", "2015-08-03 20:44:54.035123"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 29], ["created_at", "2015-08-03 20:44:54.057768"], ["updated_at", "2015-08-03 20:44:54.057768"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 48ms (Views: 44.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$cJm4QA7NgI89TeZ5/cxilO19pRr.HJseAXx6i5KMS60DXgMrNntb."], ["created_at", "2015-08-03 20:44:54.190712"], ["updated_at", "2015-08-03 20:44:54.190712"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 30], ["created_at", "2015-08-03 20:44:54.193247"], ["updated_at", "2015-08-03 20:44:54.193247"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"29"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 29]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:54 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 250ms (Views: 249.3ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:44:54 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$bxdHGh.8c.LICiTcr9O9sOWKwH3RCRtIpuPLhtBLpvZeFjNbjfM2W"], ["created_at", "2015-08-03 20:46:48.105075"], ["updated_at", "2015-08-03 20:46:48.105075"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 31], ["created_at", "2015-08-03 20:46:48.126564"], ["updated_at", "2015-08-03 20:46:48.126564"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 54ms (Views: 50.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$ghZRH5X21.WIIvODNCl1MO/RfxQxUEuF6IZYtYcOqNH.zE1CeiAvW"], ["created_at", "2015-08-03 20:46:48.270969"], ["updated_at", "2015-08-03 20:46:48.270969"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 32], ["created_at", "2015-08-03 20:46:48.273591"], ["updated_at", "2015-08-03 20:46:48.273591"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"31"}
+  [1m[36mProposal Load (0.4ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 31]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 21ms (Views: 1.5ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:46:48 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.7ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 250ms (Views: 249.0ms | ActiveRecord: 0.7ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:46:48 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$.cepJTP7Kwbp67Vouzoo3.MN8cSFJRex56KSezp/6WXEPAknaUO7S"], ["created_at", "2015-08-03 20:47:08.627833"], ["updated_at", "2015-08-03 20:47:08.627833"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 33], ["created_at", "2015-08-03 20:47:08.648893"], ["updated_at", "2015-08-03 20:47:08.648893"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 55ms (Views: 51.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$uhAb7Pva4oF8Qc8v5upsrOR/TF8RJ4VBopHdD8kbq7U6hB64PEyxa"], ["created_at", "2015-08-03 20:47:08.786796"], ["updated_at", "2015-08-03 20:47:08.786796"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 34], ["created_at", "2015-08-03 20:47:08.789325"], ["updated_at", "2015-08-03 20:47:08.789325"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"33"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 33]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 21ms (Views: 1.5ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:47:08 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.1ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 244ms (Views: 242.3ms | ActiveRecord: 1.1ms)
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:47:09 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$wdN3gs3xZJh25RCJTBhVj.am0RausPHUjGvJoPQY1Lf7RXvfH.9NG"], ["created_at", "2015-08-03 20:49:00.328890"], ["updated_at", "2015-08-03 20:49:00.328890"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 35], ["created_at", "2015-08-03 20:49:00.350975"], ["updated_at", "2015-08-03 20:49:00.350975"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 49ms (Views: 45.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$Y5DFB//C14c2uVeqw2R69.V812Cl8.M2SzZJZ.ulVDnZswbO8JMCy"], ["created_at", "2015-08-03 20:49:00.488664"], ["updated_at", "2015-08-03 20:49:00.488664"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 36], ["created_at", "2015-08-03 20:49:00.491212"], ["updated_at", "2015-08-03 20:49:00.491212"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"35"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 35]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:49:00 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.0ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 250ms (Views: 248.6ms | ActiveRecord: 1.0ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:49:00 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$Bw5ssSP06bF4dYxBBJ2Evul6gveIFHr7ueZaXGCOeSMpWwJWT4ntC"], ["created_at", "2015-08-03 20:49:33.585554"], ["updated_at", "2015-08-03 20:49:33.585554"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 37], ["created_at", "2015-08-03 20:49:33.607868"], ["updated_at", "2015-08-03 20:49:33.607868"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 54ms (Views: 50.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$qzfqISTXTflgh6yXitlV4.mXFoFuS2lxtCbiiRbhCbUA4ZCHpLeoi"], ["created_at", "2015-08-03 20:49:33.748034"], ["updated_at", "2015-08-03 20:49:33.748034"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 38], ["created_at", "2015-08-03 20:49:33.750584"], ["updated_at", "2015-08-03 20:49:33.750584"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"37"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 37]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:49:33 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 245ms (Views: 243.8ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:49:34 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$67xtyd4uVOHjXCUXAsPNweEUsFXAaE11grhq.bVVd/wYGqZ4dLzo2"], ["created_at", "2015-08-03 20:54:10.960346"], ["updated_at", "2015-08-03 20:54:10.960346"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 39], ["created_at", "2015-08-03 20:54:10.982593"], ["updated_at", "2015-08-03 20:54:10.982593"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 49ms (Views: 45.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$hSnoP0HR2pIhj6ZbU71R..ylSE3DjnYO2M.NwLWZMB2.IMpslJCB6"], ["created_at", "2015-08-03 20:54:11.118111"], ["updated_at", "2015-08-03 20:54:11.118111"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 40], ["created_at", "2015-08-03 20:54:11.120475"], ["updated_at", "2015-08-03 20:54:11.120475"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"39"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 39]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.6ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:54:11 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 243ms (Views: 241.7ms | ActiveRecord: 0.6ms)
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:54:11 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.3ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 3ms (Views: 1.9ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$CD1gr1aolbAznmQlnrwAGOrAw.oO38AfeoK19o4BTtAhltmiYC/7."], ["created_at", "2015-08-03 20:54:51.571420"], ["updated_at", "2015-08-03 20:54:51.571420"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 41], ["created_at", "2015-08-03 20:54:51.601907"], ["updated_at", "2015-08-03 20:54:51.601907"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 154ms (Views: 148.6ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$hy.OmzgdAOT1zSuTXzqgmurWRlbxWInJQ6bEz32pD4W/uWX1SJ6Z."], ["created_at", "2015-08-03 20:54:51.837533"], ["updated_at", "2015-08-03 20:54:51.837533"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 42], ["created_at", "2015-08-03 20:54:51.840582"], ["updated_at", "2015-08-03 20:54:51.840582"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"41"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 41]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.4ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:54:51 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (1.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  Rendered proposals/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 260ms (Views: 258.0ms | ActiveRecord: 1.6ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:54:52 -0500
+Processing by ProposalsController#index as HTML
+  [1m[36mExperiment Load (0.4ms)[0m  [1mSELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10[0m
+  Rendered proposals/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.7ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$ayctWo55RiYkyBuMKMzMdOfB..20U6AYlaVGD52bXZ5zED20iMts2"], ["created_at", "2015-08-03 20:57:59.923366"], ["updated_at", "2015-08-03 20:57:59.923366"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 43], ["created_at", "2015-08-03 20:57:59.944180"], ["updated_at", "2015-08-03 20:57:59.944180"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 50ms (Views: 46.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$YiCSXxzyUmuHRIU1pZzmvOMrG8KISCyCRm7d/kFy3G5.NfzHZH.He"], ["created_at", "2015-08-03 20:58:00.078538"], ["updated_at", "2015-08-03 20:58:00.078538"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 44], ["created_at", "2015-08-03 20:58:00.082429"], ["updated_at", "2015-08-03 20:58:00.082429"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"43"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 43]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 19ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$td34c1yAz2rNErMIpIxo/.g1dJVLZOfkOdZlAA/UTuyF5Psm25NP2"], ["created_at", "2015-08-03 20:58:00.181271"], ["updated_at", "2015-08-03 20:58:00.181271"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "The meaning of Life"], ["hypothesis", "The dude abides"], ["summary", "Toke, bowl, clean rug"], ["proposer_id", 45], ["created_at", "2015-08-03 20:58:00.183864"], ["updated_at", "2015-08-03 20:58:00.183864"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "experiments" ("title", "materials", "procedures", "observations", "results", "conclusion", "proposal_id", "experimenter_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["title", "Our take on the meaning of Life"], ["materials", "Bowling balls thai sticks"], ["procedures", "Toke, bowl, clean rug"], ["observations", "So mark it eight"], ["results", "The lilest Lebowski"], ["conclusion", "The dude is the laziest world wide"], ["proposal_id", 44], ["experimenter_id", 45], ["created_at", "2015-08-03 20:58:00.198374"], ["updated_at", "2015-08-03 20:58:00.198374"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:58:00 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.7ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  [1m[36mProposal Load (0.2ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 44]]
+  Rendered proposals/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 245ms (Views: 243.5ms | ActiveRecord: 0.9ms)
+  [1m[35m (0.5ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.7ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$EfrTdp0jUnbDZot3a/1uh.VSxe2lzSkUcljukAza0j3VYeDa4Ohye"], ["created_at", "2015-08-03 20:58:00.538825"], ["updated_at", "2015-08-03 20:58:00.538825"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "The meaning of Life"], ["hypothesis", "The dude abides"], ["summary", "Toke, bowl, clean rug"], ["proposer_id", 46], ["created_at", "2015-08-03 20:58:00.542390"], ["updated_at", "2015-08-03 20:58:00.542390"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "experiments" ("title", "materials", "procedures", "observations", "results", "conclusion", "proposal_id", "experimenter_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["title", "Our take on the meaning of Life"], ["materials", "Bowling balls thai sticks"], ["procedures", "Toke, bowl, clean rug"], ["observations", "So mark it eight"], ["results", "The lilest Lebowski"], ["conclusion", "The dude is the laziest world wide"], ["proposal_id", 45], ["experimenter_id", 46], ["created_at", "2015-08-03 20:58:00.544735"], ["updated_at", "2015-08-03 20:58:00.544735"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:58:00 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.3ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  [1m[36mProposal Load (0.2ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 45]]
+  Rendered proposals/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.5ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.8ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$ZhambkBTA0c6c/004ZlSleg8UMkTKrrQ0fEmb34.QPr9ejArzM9Bi"], ["created_at", "2015-08-03 20:59:13.050111"], ["updated_at", "2015-08-03 20:59:13.050111"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 47], ["created_at", "2015-08-03 20:59:13.069835"], ["updated_at", "2015-08-03 20:59:13.069835"]]
+  [1m[36m (0.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by ProposalsController#index as HTML
+  Rendered proposals/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 50ms (Views: 45.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$9VNQoGMDGj5enG4o.pTLgeLLNXRBw2SHuBZtJorlXYHo8O0ZhVzai"], ["created_at", "2015-08-03 20:59:13.208217"], ["updated_at", "2015-08-03 20:59:13.208217"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Where is Bermuda Triangle"], ["hypothesis", "Twilight Zone"], ["summary", "This is stranger than fiction"], ["proposer_id", 48], ["created_at", "2015-08-03 20:59:13.210755"], ["updated_at", "2015-08-03 20:59:13.210755"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by ProposalsController#show as HTML
+  Parameters: {"id"=>"47"}
+  [1m[36mProposal Load (0.3ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 47]]
+  Rendered proposals/show.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 20ms (Views: 1.5ms | ActiveRecord: 1.7ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$WNtfubOrPsbY6ysAOXpvFeB8Jq20Lwxlg7Pr5D6aAI.XHum.zDs4m"], ["created_at", "2015-08-03 20:59:13.309065"], ["updated_at", "2015-08-03 20:59:13.309065"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "The meaning of Life"], ["hypothesis", "The dude abides"], ["summary", "Toke, bowl, clean rug"], ["proposer_id", 49], ["created_at", "2015-08-03 20:59:13.311308"], ["updated_at", "2015-08-03 20:59:13.311308"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "experiments" ("title", "materials", "procedures", "observations", "results", "conclusion", "proposal_id", "experimenter_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["title", "Our take on the meaning of Life"], ["materials", "Bowling balls thai sticks"], ["procedures", "Toke, bowl, clean rug"], ["observations", "So mark it eight"], ["results", "The lilest Lebowski"], ["conclusion", "The dude is the laziest world wide"], ["proposal_id", 48], ["experimenter_id", 49], ["created_at", "2015-08-03 20:59:13.324027"], ["updated_at", "2015-08-03 20:59:13.324027"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:59:13 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.6ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  [1m[36mProposal Load (0.2ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 48]]
+  Rendered proposals/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 247ms (Views: 245.8ms | ActiveRecord: 0.8ms)
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."name" = 'Roger Rabbit' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("user_type", "name", "email", "password_hash", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["user_type", "faculty"], ["name", "Roger Rabbit"], ["email", "rr@wu.edu"], ["password_hash", "$2a$10$LPfYRUFWmzY13WNs35NNv.9YLC4YbBJpXCF9Cmg7/3rP1./MPUL.a"], ["created_at", "2015-08-03 20:59:13.658671"], ["updated_at", "2015-08-03 20:59:13.658671"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "proposals" ("title", "hypothesis", "summary", "proposer_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "The meaning of Life"], ["hypothesis", "The dude abides"], ["summary", "Toke, bowl, clean rug"], ["proposer_id", 50], ["created_at", "2015-08-03 20:59:13.661227"], ["updated_at", "2015-08-03 20:59:13.661227"]]
+  [1m[35m (0.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "experiments" ("title", "materials", "procedures", "observations", "results", "conclusion", "proposal_id", "experimenter_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"  [["title", "Our take on the meaning of Life"], ["materials", "Bowling balls thai sticks"], ["procedures", "Toke, bowl, clean rug"], ["observations", "So mark it eight"], ["results", "The lilest Lebowski"], ["conclusion", "The dude is the laziest world wide"], ["proposal_id", 49], ["experimenter_id", 50], ["created_at", "2015-08-03 20:59:13.665194"], ["updated_at", "2015-08-03 20:59:13.665194"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/" for 127.0.0.1 at 2015-08-03 15:59:13 -0500
+Processing by ProposalsController#index as HTML
+  [1m[35mExperiment Load (0.3ms)[0m  SELECT  "experiments".* FROM "experiments"  ORDER BY created_at DESC LIMIT 10
+  [1m[36mProposal Load (0.2ms)[0m  [1mSELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1[0m  [["id", 49]]
+  Rendered proposals/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.5ms)
+Started GET "/proposals/49/experiments/4" for 127.0.0.1 at 2015-08-03 15:59:13 -0500
+Processing by ExperimentsController#show as HTML
+  Parameters: {"proposal_id"=>"49", "id"=>"4"}
+  [1m[35mProposal Load (0.3ms)[0m  SELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1  [["id", 49]]
+  [1m[36mExperiment Load (0.2ms)[0m  [1mSELECT  "experiments".* FROM "experiments" WHERE "experiments"."id" = $1 LIMIT 1[0m  [["id", 4]]
+  [1m[35mProposal Load (0.3ms)[0m  SELECT  "proposals".* FROM "proposals" WHERE "proposals"."id" = $1 LIMIT 1  [["id", 49]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 50]]
+  Rendered experiments/show.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 9ms (Views: 5.8ms | ActiveRecord: 1.2ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
