@@ -1,23 +1,9 @@
-<div class="container">
+<h3>Welcome to Washington University's Public Health Fund</h3>
+  <h4>List of All Proposals</h4>
 
-  <% if current_user %>
-  <div id="all-links">
-    <ul>
-      <li><%= link_to "All Proposals", proposals_path %></li>
-      <li><%= link_to "All Experiments", root_path %></li>
-    </ul>
-  </div>
-  <% end %>
+   <ul id="proposal-list">
+  <% @proposals.each do |proposal| %>
+     <li><%= link_to proposal.title, proposal_path(proposal) %></li>
+   <% end %>
+   </ul>
 
-  <h3>Welcome to Washington University's Public Health Fund</h3>
-    <h4>List of All Proposals</h4>
-
-     <ul id="proposal-list">
-    <% @proposals.each do |proposal| %>
-       <li><%= link_to proposal.title, proposal_path(proposal) %></li>
-     <% end %>
-     </ul>
-
-
-
-</div>
