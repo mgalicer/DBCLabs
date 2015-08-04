@@ -1,0 +1,35 @@
+<div class="container">
+  <%= form_for @proposal do |f| %>
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title%>
+    </div>
+
+    <div class="field">
+      <%= f.label :hypothesis %><br>
+      <%= f.text_field :hypothesis%>
+    </div>
+
+    <div class="field">
+      <%= f.label :summary %><br>
+      <%= f.text_field :summary %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit%>
+    </div>
+
+  <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

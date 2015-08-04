@@ -1,6 +1,23 @@
-<%= @proposal.title %>
-<%= @proposal.hypothesis %>
-<%= @proposal.title %>
-<%= @proposal.summary %>
-<%= @proposal.created_at %>
-<%= @proposal.proposer.name %>
+
+<div class="container">
+<h3>Proposal Overview:</h3>
+<p><%= @proposal.title %></p>
+<p><%= @proposal.hypothesis %></p>
+<p><%= @proposal.summary %></p>
+<p><%= @proposal.created_at %></p>
+<p><%= @proposal.proposer.name %></p>
+
+</div>
+
+<% if @proposal.experiments.length > 0 %>
+  <h4>Current experiments based on this proposal:</h4>
+  <% @proposal.experiments.each do |experiment| %>
+    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %><br>
+  <% end %>
+<% end %>
+<br>
+<br>
+<div id="new-experiment-link">
+<%= link_to "Create New Experiment", new_proposal_experiment_path(@proposal) %>
+</div>
+

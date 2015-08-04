@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validate :password_length
 
+  has_many :proposals, foreign_key: :proposer_id
+  has_many :experiments, foreign_key: :experimenter_id
+  has_many :comments, foreign_key: :commenter_id
+
   require 'bcrypt'
 
   include BCrypt
