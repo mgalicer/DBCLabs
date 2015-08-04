@@ -1,7 +1,7 @@
 class ExperimentsController < ApplicationController
   def index
       @proposals = Proposal.all
-      @experiments = Experiment.all
+      @experiments = Experiment.order("created_at DESC")
       @comments = Comment.all
     end
 
@@ -18,6 +18,7 @@ class ExperimentsController < ApplicationController
     def create
       @proposal = Proposal.find(params[:proposal_id])
       @experiment = @proposal.experiments.new(experiment_params)
+      @experiment.experimenter = current_user
       if @experiment.save
         redirect_to @proposal
       else
