@@ -1,17 +1,26 @@
-<% if @user %>
-  <% @user.errors.full_messages.each do |msg| %>
-    <p>error: <%= msg %></p>
+<script type="text/javascript">$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
+<div class = "all-forms">
+<h4>Sign Up Here!</h4>
+<br>
+  <%= form_for :user, url: users_path do |f| %>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+    <%= f.label :type %><br>
+    <%= f.select(:user_type, @user_options, {}, {class: "browser-default"}) %><br>
+    <%=f.label :email %><br>
+    <%= f.text_field :email %><br>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+    <%= f.submit "Register"%>
   <% end %>
-<% end %>
-
-<%= form_for :user, url: users_path do |f| %>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.label :type %><br>
-  <%= f.select(:user_type, @user_options) %><br>
-  <%=f.label :email %><br>
-  <%= f.text_field :email %><br>
-  <%= f.label :password %><br>
-  <%= f.password_field :password %>
-  <%= f.submit "Register"%>
-<% end %>
+  <div class = "errors">
+    <% if @user %>
+      <% @user.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
