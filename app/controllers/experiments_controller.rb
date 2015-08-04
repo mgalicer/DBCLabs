@@ -7,7 +7,7 @@ class ExperimentsController < ApplicationController
 
     def show
       @proposal = Proposal.find(params[:proposal_id])
-      @experiment = Experiment.find(params[:experiment_id])
+      @experiment = Experiment.find(params[:id])
     end
 
     def new
@@ -17,7 +17,7 @@ class ExperimentsController < ApplicationController
 
     def create
       @proposal = Proposal.find(params[:proposal_id])
-      @experiment = @proposal.experiments.new(params[:experiment_id])
+      @experiment = @proposal.experiments.new(experiment_params)
       @experiment.experimenter = current_user
       if @experiment.save
         redirect_to @proposal
