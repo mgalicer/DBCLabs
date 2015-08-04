@@ -1,12 +1,18 @@
 
 <div class="container">
-<h3>Proposal Overview:</h3>
-<p><%= @proposal.title %></p>
-<p><%= @proposal.hypothesis %></p>
-<p><%= @proposal.summary %></p>
-<p><%= @proposal.created_at %></p>
-<p><%= @proposal.proposer.name %></p>
-
+  <h3>Proposal Overview:</h3>
+  <p>Proposal Title:</p>
+  <p><%= @proposal.title %></p>
+  <p>Hypothesis:</p>
+  <p><%= @proposal.hypothesis %></p>
+  <p>Summary:</p>
+  <p><%= @proposal.summary %></p>
+    <div class="proposal-footer">
+      <p>Proposal Created at:</p>
+    <p><%= @proposal.created_at %></p>
+      <p>Proposer:</p>
+    <p><%= @proposal.proposer.name %></p>
+    </div>
 </div>
 
 <% if @proposal.experiments.length > 0 %>

@@ -18,7 +18,6 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(session[:user_id])
-    puts "$$$$$$$$$$$$$$$$$$$$$$"
     @proposals = user.proposals.all
     @experiments = user.experiments.all
     @comments = Comment.all
