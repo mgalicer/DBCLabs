@@ -26,8 +26,10 @@ Experiment.destroy_all
 15.times do
   faculty = User.create!(user_type: "faculty", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
   labstaff = User.create!(user_type: "lab staff", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
+  users = [faculty, labstaff]
   prop = Proposal.create!( title: Faker::Lorem.sentence, hypothesis: Faker::Lorem.paragraph, summary: Faker::Lorem.paragraphs.first, proposer: faculty)
-  Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, proposal: prop, experimenter: labstaff)
-
+  experiment = Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, proposal: prop, experimenter: labstaff)
+  prop.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
+  experiment.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
 
 end
