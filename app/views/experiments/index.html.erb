@@ -1,23 +1,23 @@
-<nav>
-  <div class="nav-wrapper">
-    <a href="/" class="brand-logo">WU</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/users/<%= current_user.id %>">Profile</a></li>
-      <li><a href="/proposals">Proposals</a></li>
-      <li><a href="/experiments">Experiments</a></li>
+<div class="container">
+<% if current_user %>
+
+  <div id="all-links">
+    <ul>
+      <li><%= link_to "All Proposals", proposals_path %></li>
+      <li><%= link_to "All Experiments", root_path %></li>
     </ul>
   </div>
-</nav>
 
-<div class="container">
+  <div id="10-experiments">
   <h1>10 Most Recent Experiments</h1>
   <% @experiments.each_with_index do |e, i| %>
   <ul>
 
     <li><%= link_to e.title, proposal_experiment_path(e.proposal, e) %></li>
     <% if i == 9 %>
+    <br>
       <hr>
-      <br>
+
       <h1>Older Experiments</h1>
     <% end %>
 
@@ -25,4 +25,6 @@
 
   </ul>
    <% end %>
+ </div>
+<% end %>
 </div>
