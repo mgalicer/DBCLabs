@@ -10,6 +10,7 @@ User.destroy_all
 Proposal.destroy_all
 Experiment.destroy_all
 
+
 # user1 = User.create!(user_type: "faculty", name: "Roger Rabbit", email: "rr@wu.edu", password: "password")
 
 # user2 = User.create!(user_type: "faculty", name: "Marci Dolphin", email: "md@wu.edu", password: "password")
@@ -22,7 +23,8 @@ Experiment.destroy_all
 
 
 # experiment2 = Experiment.create!( title: "Our take on Triangles", materials: "triangles pyramids", procedures: "Fly yo plane over the Bermuda Triangle and Bail out", observations: "We did not vanish", results: "The enigma remains", conclusion: "The stuff is overrated", proposal: prop2, experimenter: user2)
-
+faculty = User.create!(user_type: "faculty", name: "pete", email: Faker::Internet.email, password: 'password' )
+labstaff = User.create!(user_type: "labstaff", name: "brian", email: Faker::Internet.email, password: 'password' )
 15.times do
   faculty = User.create!(user_type: "faculty", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
   labstaff = User.create!(user_type: "lab staff", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
