@@ -1,1 +1,14 @@
-
+<nav>
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo">WU</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <% if current_user %>
+        <li><%= link_to 'Profile', user_path(current_user) %></li>
+        <li><%= link_to 'Logout', session_path(current_user), :method => :delete %></li>
+      <% else %>
+        <li><%= link_to 'Sign Up', new_user_path %></li>
+        <li><%= link_to 'Login', new_session_path %></li>
+      <% end %>
+    </ul>
+  </div>
+</nav
