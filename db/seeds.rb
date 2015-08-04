@@ -31,5 +31,4 @@ Experiment.destroy_all
   experiment = Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, proposal: prop, experimenter: labstaff)
   prop.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
   experiment.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
-
 end

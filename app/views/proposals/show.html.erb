@@ -11,34 +11,31 @@
   <% end %>
 
   <h3>Proposal Overview:</h3>
-  <p>Proposal Title:</p>
+  <label>Proposal Title:</label>
   <p><%= @proposal.title %></p>
-  <p>Hypothesis:</p>
+  <label>Hypothesis:</label>
   <p><%= @proposal.hypothesis %></p>
-  <p>Summary:</p>
+  <label>Summary:</label>
   <p><%= @proposal.summary %></p>
     <div class="proposal-footer">
-      <p>Proposal Created at:</p>
-    <p><%= @proposal.created_at %></p>
-      <p>Proposer:</p>
-    <p><%= @proposal.proposer.name %></p>
+      <label>Proposal Created at:</label>
+      <p><%= @proposal.created_at %></p>
+      <label>Proposer:</label>
+      <p><%= @proposal.proposer.name %></p>
     </div>
+
+  <% if @proposal.experiments.length > 0 %>
+    <h4>Current experiments based on this proposal:</h4>
+    <% @proposal.experiments.each do |experiment| %>
+      <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %><br>
+    <% end %>
+  <% end %><br><br>
+
+  <div id="new-experiment-link">
+    <%= link_to "Create New Experiment", new_proposal_experiment_path(@proposal) %>
+  </div>
+
+  <%= link_to "New comment", new_proposal_comment_path(@proposal) %>
+
+    <%= render partial: 'comments/show' %>
 </div>
-
-<% if @proposal.experiments.length > 0 %>
-  <h4>Current experiments based on this proposal:</h4>
-  <% @proposal.experiments.each do |experiment| %>
-    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %><br>
-  <% end %>
-<% end %>
-<br>
-<br>
-<div id="new-experiment-link">
-<%= link_to "Create New Experiment", new_proposal_experiment_path(@proposal) %>
-</div>
-
-<%= link_to "New comment", new_proposal_comment_path(@proposal) %>
-
-<%= render partial: 'comments/show' %>
-
-
