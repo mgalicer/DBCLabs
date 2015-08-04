@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
     end
 
     def show
-      @comments = @parent.comments
+      @comments = @parent.comments.all
     end
 
 end
