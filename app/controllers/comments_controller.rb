@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  respond_to :html, :js
 
   def index
     @commentable = find_commentable
@@ -10,7 +11,13 @@ class CommentsController < ApplicationController
     # @proposal = Proposal.find(params[:proposal_id])
     # @experiment = Experiment.find(params[:experiment_id])
     @commentable = find_commentable
-    @comment = Comment.new
+
+    respond_to do |format|
+      format.html { render :new }
+      format.js { render json: { form: render_to_string("new.html", layout: false) } }
+    end
+
+    # @comment = Comment.new
   end
 
   def create

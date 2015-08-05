@@ -21,7 +21,11 @@
 
 
 <br>
-<%= link_to "New comment", new_experiment_comment_path(@experiment) %>
+<%= button_to "New comment", new_experiment_comment_path(@experiment), :method => :get, class: "comment btn" %>
+<div class="hidden" id="new-form-container">
+  <%= render partial: "comments/comment_form" %>
+</div>
+<div class="new-comment"></div>
 <h5>Comments</h5>
 <%= render partial: 'comments/show' %>
 
