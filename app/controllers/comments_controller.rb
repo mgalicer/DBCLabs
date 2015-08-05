@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     # @proposal = Proposal.find(params[:proposal_id])
     # @experiment = Experiment.find(params[:experiment_id])
     @commentable = find_commentable
+
     # @comment = Comment.new
   end
 
@@ -35,7 +36,6 @@ class CommentsController < ApplicationController
         format.html { redirect_to @comment.base_commentable }
         format.json { render json: {html: render_to_string( partial: "comment.html", locals: {comment: @comment, i: @commentable.comments.length}, layout: false)}}
       end
-
     else
       render 'new'
     end

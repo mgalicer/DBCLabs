@@ -1,4 +1,4 @@
-<%= form_for [commentable, comment] do |f| %>
+<%= form_for [commentable, comment], :html => {class: "in-page-comment"} do |f| %>
   <%= f.text_area :content %> <br>
   <%= f.submit %>
 <% end %>

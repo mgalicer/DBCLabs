@@ -1,2 +1,7 @@
-<h1>What would you like to say?</h1>
-<%= render partial: "comment_form" %>
+<br><h5><%= @commentable.commenter.name %> said: "<%= @commentable.content %>"</h5>
+
+<p>Reply:</p>
+<%= form_for [@commentable, @comment = Comment.new] do |f| %>
+  <%= f.text_area :content %> <br>
+  <%= f.submit %>
+<% end %>

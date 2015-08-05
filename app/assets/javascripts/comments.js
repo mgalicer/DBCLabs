@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $(".new_comment").on('submit', function(event){
+  $(".in-page-comment").on('submit', function(event){
     event.preventDefault();
 
     var el = $(this)
@@ -11,8 +11,7 @@ $(document).ready(function(){
       dataType: "json"
     })
     request.done(function(response){
-      $(".new-comment").prepend(response.html)
+      $(".new-comment").append(response.html)
     })
-
   })
 })

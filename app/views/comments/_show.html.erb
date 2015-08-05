@@ -1,8 +1,85 @@
 <% if @comments %>
   <div id = "comment-container">
     <% @comments.each_with_index do |comment, i| %>
-      <%= render partial: "comments/comment", locals: {comment: comment, i: i} %>
+      <% if i % 2 == 0 %>
+      <div style="width:400px">
+        <div class="card #9e9e9e grey">
+          <div class="card-content white-text">
+            <h6><%= comment.content %></h6>
+            <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+            <div class="reply-button"><%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %></div>
+            <br>
+            <br>
+            <div id="sub-comment">
+              <% if comment.comments.length > 0 %>
+
+                <%  comment.comments.each do |comment| %>
+                <h6><%= comment.content %></h6>
+              <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "button" %>
+              <br>
+              <br>
+              <div id="sub-comment">
+              <% if comment.comments.length > 0 %>
+
+                <%  comment.comments.each do |comment| %>
+                <h6><%= comment.content %></h6>
+              <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "button" %>
+              <br>
+              <br>
+                <% end %>
+              </div>
+            <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <% else %>
+
+       <div style="width:400px">
+        <div class="card #ef5350 red lighten-1">
+          <div class="card-content white-text">
+            <h6><%= comment.content %></h6>
+            <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+            <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
+            <br>
+            <br>
+            <div id="sub-comment">
+              <% if comment.comments.length > 0 %>
+
+                <%  comment.comments.each do |comment| %>
+                <h6><%= comment.content %></h6>
+              <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "button" %>
+              <br>
+              <br>
+              <div id="sub-comment">
+              <% if comment.comments.length > 0 %>
+
+                <%  comment.comments.each do |comment| %>
+                <h6><%= comment.content %></h6>
+              <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
+              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "button" %>
+              <br>
+              <br>
+                <% end %>
+              </div>
+            <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% end %>
     <% end %>
+
   </div>
+
 <% end %>
+
 

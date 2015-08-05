@@ -4,6 +4,7 @@
     <div class="card-content white-text">
       <h6><%= comment.content %></h6>
       <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
     </div>
   </div>
 </div>
@@ -15,6 +16,7 @@
     <div class="card-content white-text">
       <h6><%= comment.content %></h6>
       <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
     </div>
   </div>
 </div>

@@ -26,10 +26,9 @@
 <div class="hidden" id="new-form-container">
   <%= render partial: "comments/comment_form", locals: { commentable: @experiment, comment: Comment.new } %>
 </div>
-<div class="new-comment"></div>
 <% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>
 <% else %>
   <p>There are no comments yet.</p>
 <% end %>
-
+<div class="new-comment"></div>
