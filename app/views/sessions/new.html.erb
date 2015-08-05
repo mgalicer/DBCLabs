@@ -1,11 +1,16 @@
-<% if @errors %>
-  <%= @errors %>
-<% end %>
+<div class = "all-forms">
+  <h4>Login</h4>
+  <%= form_for :user, url: sessions_path do |f| %>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+    <%= f.submit "Login"%>
+  <% end %>
+  <div class = "errors">
+  <% if @errors %>
+    <%= @errors %>
+  <% end %>
+  </div>
 
-<%= form_for :user, url: sessions_path do |f| %>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.label :password %><br>
-  <%= f.password_field :password %>
-  <%= f.submit "Login"%>
-<% end %>
+</div>
