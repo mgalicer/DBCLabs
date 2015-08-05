@@ -29,9 +29,14 @@
 <br>
 <h5>Comments</h5>
 <br>
+  <div class="hidden" id="new-form-container">
+    <%= render partial: "comments/comment_form", locals: { commentable: @proposal, comment: Comment.new } %>
+  </div>
+<br>
 <% if @comments.length > 0 %>
-<%= button_to "New comment", new_proposal_comment_path(@proposal), :method => :get, class: "btn" %>
   <%= render partial: 'comments/show' %>
 <% else %>
   <p>There are no comments yet.</p>
 <% end %>
+
+<div class="new-comment"></div>
