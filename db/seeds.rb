@@ -32,7 +32,7 @@ labstaff = User.create!(user_type: "lab staff", name: "brian", email: "fu@staff.
   labstaff = User.create!(user_type: "lab staff", name: Faker::Name.name, email: "#{Faker::Name.name}@staff.wuphf.edu", password: 'password' )
   users = [faculty, labstaff]
   prop = Proposal.create!( title: Faker::Lorem.sentence, hypothesis: Faker::Lorem.paragraph, summary: Faker::Lorem.paragraphs.first, proposer: faculty)
-  experiment = Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, status: status.sample, proposal: prop, experimenter: labstaff)
+  experiment = Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, status: "open", proposal: prop, experimenter: labstaff)
   prop.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
   experiment.comments.create!(content: Faker::Lorem.sentence, commenter: users.sample)
 end
