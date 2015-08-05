@@ -22,14 +22,11 @@
 
 <br>
 
-
-
 <h5>Comments</h5>
 <div class="hidden" id="new-form-container">
-  <%= render partial: "comments/comment_form" %>
+  <%= render partial: "comments/comment_form", locals: { commentable: @experiment, comment: Comment.new } %>
 </div>
 <div class="new-comment"></div>
-<br>
 <% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>
 <% else %>

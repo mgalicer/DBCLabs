@@ -11,12 +11,6 @@ class CommentsController < ApplicationController
     # @proposal = Proposal.find(params[:proposal_id])
     # @experiment = Experiment.find(params[:experiment_id])
     @commentable = find_commentable
-
-    respond_to do |format|
-      format.html { render :new }
-      format.js { render json: { form: render_to_string("new.html", layout: false) } }
-    end
-
     # @comment = Comment.new
   end
 
@@ -28,12 +22,20 @@ class CommentsController < ApplicationController
     # @comment = @parent.comments.new(params[:comment])
     @commentable = find_commentable
     @comment = @commentable.comments.build(comment_params)
-      # puts "CURRENT USER"
-      # p current_user
     @comment.commenter = current_user
+
+    # respond_to do |format|
+    #   format.html { render :new }
+    #   format.js { render json: { form: render_to_string("new.html", layout: false) } }
+    # end
+
     if @comment.save
       flash[:notice] = "Successfully created comment."
-      redirect_to @comment.base_commentable
+      respond_to do |format|
+        format.html { redirect_to @comment.base_commentable }
+        format.json { render json: {html: render_to_string( partial: "comment.html", locals: {comment: @comment, i: @commentable.comments.length}, layout: false)}}
+      end
+
     else
       render 'new'
     end
