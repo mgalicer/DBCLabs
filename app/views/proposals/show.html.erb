@@ -12,7 +12,7 @@
 <br>
 <br>
 <% if @proposal.experiments.length > 0 %>
-  <h5>Experiments on this proposal:</h5>
+  <h5>Current experiments on this proposal:</h5>
   <div>
     <% @proposal.experiments.each do |experiment| %>
       <span class = "exp-links"><%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %></span>
@@ -25,12 +25,12 @@
     <%= button_to "Create New Experiment", new_proposal_experiment_path(@proposal), :method => :get, class: "btn" %>
   </div>
 <% end %>
-
-<%= button_to "New comment", new_proposal_comment_path(@proposal), :method => :get, class: "btn" %>
+<br>
 <br>
 <h5>Comments</h5>
 <br>
 <% if @comments.length > 0 %>
+<%= button_to "New comment", new_proposal_comment_path(@proposal), :method => :get, class: "btn" %>
   <%= render partial: 'comments/show' %>
 <% else %>
   <p>There are no comments yet.</p>

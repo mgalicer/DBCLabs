@@ -1,5 +1,10 @@
-<h1>What would you like to say?</h1>
+
+<div class = "all-forms">
+<h4>Leave a comment:</h4>
 <%= form_for [@commentable, @comment = Comment.new] do |f| %>
+  <div class = "input-field">
   <%= f.text_area :content %> <br>
   <%= f.submit %>
+</div>
 <% end %>
+</div>
