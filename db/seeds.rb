@@ -23,11 +23,11 @@ Experiment.destroy_all
 
 
 # experiment2 = Experiment.create!( title: "Our take on Triangles", materials: "triangles pyramids", procedures: "Fly yo plane over the Bermuda Triangle and Bail out", observations: "We did not vanish", results: "The enigma remains", conclusion: "The stuff is overrated", proposal: prop2, experimenter: user2)
-faculty = User.create!(user_type: "faculty", name: "pete", email: Faker::Internet.email, password: 'password' )
-labstaff = User.create!(user_type: "labstaff", name: "brian", email: Faker::Internet.email, password: 'password' )
+faculty = User.create!(user_type: "faculty", name: "pete", email: "pete@staff.wuphf.edu", password: 'password' )
+labstaff = User.create!(user_type: "labstaff", name: "brian", email: "fu@staff.wuphf.edu", password: 'password' )
 15.times do
-  faculty = User.create!(user_type: "faculty", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
-  labstaff = User.create!(user_type: "lab staff", name: Faker::Name.name, email: Faker::Internet.email, password: 'password' )
+  faculty = User.create!(user_type: "faculty", name: Faker::Name.name, email: "#{Faker::Name.name}@staff.wuphf.edu", password: 'password' )
+  labstaff = User.create!(user_type: "lab staff", name: Faker::Name.name, email: "#{Faker::Name.name}@staff.wuphf.edu", password: 'password' )
   users = [faculty, labstaff]
   prop = Proposal.create!( title: Faker::Lorem.sentence, hypothesis: Faker::Lorem.paragraph, summary: Faker::Lorem.paragraphs.first, proposer: faculty)
   experiment = Experiment.create!( title: Faker::Lorem.sentence, materials: Faker::Lorem.words.join(""), procedures: Faker::Lorem.sentence, observations: Faker::Lorem.sentence, results: Faker::Lorem.sentence, conclusion: Faker::Lorem.sentence, proposal: prop, experimenter: labstaff)
