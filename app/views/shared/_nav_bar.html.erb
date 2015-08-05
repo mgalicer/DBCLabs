@@ -1,16 +1,18 @@
-<nav class="#c62828 red darken-3">
-  <div class="nav-wrapper">
-    <a href="/" class="brand-logo"><%= image_tag "wu_shiba.png", class: "responsive-img", style: "width: 60px; height: 60px" %></a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <% if current_user %>
-        <li><%= link_to "All Experiments", experiments_path %></li>
-        <li><%= link_to "All Proposals", proposals_path %></li>
-        <li><%= link_to 'Profile', user_path(current_user) %></li>
-        <li><%= link_to 'Logout', session_path(current_user), :method => :delete %></li>
-      <% else %>
-        <li><%= link_to 'Sign Up', new_user_path %></li>
-        <li><%= link_to 'Login', new_session_path %></li>
-      <% end %>
-    </ul>
-  </div>
-</nav
+<div class="navbar-fixed">
+  <nav class="#c62828 red darken-3">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo"><%= image_tag "wu_shiba.png", class: "responsive-img", style: "width: 60px; height: 60px" %></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <% if current_user %>
+          <li><%= link_to "All Experiments", experiments_path %></li>
+          <li><%= link_to "All Proposals", proposals_path %></li>
+          <li><%= link_to 'Profile', user_path(current_user) %></li>
+          <li><%= link_to 'Logout', session_path(current_user), :method => :delete %></li>
+        <% else %>
+          <li><%= link_to 'Sign Up', new_user_path %></li>
+          <li><%= link_to 'Login', new_session_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>
