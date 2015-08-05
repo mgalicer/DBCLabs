@@ -21,6 +21,8 @@ class UsersController < ApplicationController
     @proposals = user.proposals.all
     @experiments = user.experiments.all
     @comments = Comment.all
+    puts "AKLSJDKADS:H:KASLDDHKS:L"
+    p current_user.user_type
   end
 
 
