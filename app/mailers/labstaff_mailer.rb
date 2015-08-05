@@ -5,6 +5,6 @@ class LabstaffMailer < ApplicationMailer
     @experiment = experiment
     @experiment_url = experiment_path(experiment)
     @proposal_url = proposal_path(proposal)
-    mail(to: @user.email, subject: "This is a test!")
+    mail(to: @user.email, subject: "Your Experiment Record")
   end
 end
