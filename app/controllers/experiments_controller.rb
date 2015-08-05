@@ -1,8 +1,11 @@
 class ExperimentsController < ApplicationController
+  respond_to :html, :js
+
   def index
       @proposals = Proposal.all
       @experiments = Experiment.order("created_at DESC")
       @comments = Comment.all
+      @status_options = ['open', 'closed']
     end
 
     def show
@@ -14,6 +17,8 @@ class ExperimentsController < ApplicationController
     def new
       @experiment = Experiment.new
       @proposal = Proposal.find(params[:proposal_id])
+      @status_options = ['open', 'closed']
+
     end
 
     def create
@@ -33,7 +38,7 @@ class ExperimentsController < ApplicationController
 
     private
     def experiment_params
-      params.require(:experiment).permit(:title, :materials, :procedures, :observations, :results, :conclusion)
+      params.require(:experiment).permit(:status, :title, :materials, :procedures, :observations, :results, :conclusion)
     end
 
 end

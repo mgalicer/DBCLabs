@@ -1,10 +1,7 @@
+<br><h5><%= @commentable.commenter.name %> said: "<%= @commentable.content %>"</h5>
 
-<div class = "all-forms">
-<h4>Leave a comment:</h4>
+<p>Reply:</p>
 <%= form_for [@commentable, @comment = Comment.new] do |f| %>
-  <div class = "input-field">
   <%= f.text_area :content %> <br>
   <%= f.submit %>
-</div>
 <% end %>
-</div>

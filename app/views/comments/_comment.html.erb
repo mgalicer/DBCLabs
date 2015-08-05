@@ -1,0 +1,23 @@
+<% if i % 2 == 0 %>
+<div style="width:400px">
+  <div class="card #9e9e9e grey">
+    <div class="card-content white-text">
+      <h6><%= comment.content %></h6>
+      <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
+    </div>
+  </div>
+</div>
+
+<% else %>
+
+<div style="width:400px">
+  <div class="card #ef5350 red lighten-1">
+    <div class="card-content white-text">
+      <h6><%= comment.content %></h6>
+      <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
+    </div>
+  </div>
+</div>
+<% end %>

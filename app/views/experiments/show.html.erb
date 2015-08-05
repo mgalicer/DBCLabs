@@ -3,6 +3,8 @@
 <p style = "color:grey;">by <%= @experiment.experimenter.name %>&nbsp;|&nbsp;<%= @experiment.created_at.strftime("%F") %></p>
 <p></p>
 <br>
+<label class = "info-titles">Status:</label>
+<p ><%= @experiment.status %></p>
 <label class = "info-titles">Materials:</label>
 <p ><%= @experiment.materials %></p>
 <label class = "info-titles">Observations:</label>
@@ -21,9 +23,13 @@
 
 
 <br>
+
 <h5>Comments</h5>
-<%= button_to "New comment", new_experiment_comment_path(@experiment), :method => :get, class: "btn" %>
-<br>
+
+<div class="hidden" id="new-form-container">
+  <%= render partial: "comments/comment_form", locals: { commentable: @experiment, comment: Comment.new } %>
+</div>
+<div class="new-comment"></div>
 <% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>
 <% else %>
