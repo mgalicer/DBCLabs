@@ -19,7 +19,7 @@
 {
   text-decoration: underline;
 }
-
+/*"card #ef5350 red lighten-1"*/
 
 .exp-links a:hover
 {
@@ -40,4 +40,21 @@
   margin-top: 20px;
   color: #c62828;
 }
+
+#sub-comment {
+  position: relative;
+  margin-left: 30px;
+
+}
+
+.button {
+  background-color: #1cb0a1;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+
+
+
+
 
