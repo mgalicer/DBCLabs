@@ -1,0 +1,56 @@
+<style>
+  ul{list-style-type: none; padding:15px;}
+  .list-header{color: #76232f;}
+</style>
+
+<p>Hi <%= @user.name %>,</p>
+
+<p>Here is the information for the experiment you performed as well as the information for the proposal that it pertained to.</p>
+
+<h4><strong>Proposal Info:</strong></h4>
+<ul>
+  <li class = "list-header">Hypothesis:</li>
+  <ul>
+    <li><%= @proposal.hypothesis%></li>
+  </ul>
+  <li class = "list-header">Summary:</li>
+  <ul>
+    <li><%= @proposal.summary %></li>
+  </ul>
+</ul>
+
+<h4><strong>Experiment Info:</strong></h4>
+<ul>
+  <li class = "list-header">Title:</li>
+  <ul>
+    <li><%= @experiment.title%></li>
+  </ul>
+  <li class = "list-header">Materials:</li>
+  <ul>
+    <li><%= @experiment.materials%></li>
+  </ul>
+  <li class = "list-header">Procedures:</li>
+  <ul>
+    <li><%= @experiment.procedures%></li>
+  </ul>
+  <li class = "list-header">Observations:</li>
+  <ul>
+    <li><%= @experiment.observations%></li>
+  </ul>
+  <li class = "list-header">Results:</li>
+  <ul>
+    <li><%= @experiment.results%></li>
+  </ul>
+  <li class = "list-header">Conclusion:</li>
+  <ul>
+    <li><%= @experiment.conclusion%></li>
+  </ul>
+</ul>
+
+<p>
+  You can view your experiment information at this link: <%= @experiment_url %>
+</p>
+<p>
+  You can view the associated proposal at this link: <%= @proposal_url %>
+</p>
+

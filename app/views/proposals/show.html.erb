@@ -15,7 +15,7 @@
   <h5>Current experiments on this proposal:</h5>
   <div>
     <% @proposal.experiments.each do |experiment| %>
-      <span class = "exp-links"><%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %></span>
+      <span class = "exp-links"><%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %></span><br>
     <% end %>
   </div>
 <% end %><br><br>

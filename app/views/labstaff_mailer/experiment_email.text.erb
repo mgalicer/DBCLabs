@@ -1,0 +1,48 @@
+Hi <%= @user.name %>,
+
+Here is the information for the experiment you performed as well as the information for the proposal that it pertained to.
+
+Proposal Info:
+  Hypothesis:
+
+    <%= @proposal.hypothesis%>
+
+  Summary:
+
+    <%= @proposal.summary %>
+
+
+
+Experiment Info:</strong></h4>
+
+  Title:
+
+    <%= @experiment.title%>
+
+  Materials:
+
+    <%= @experiment.materials%>
+
+  Procedures:
+
+    <%= @experiment.procedures%>
+
+  Observations:
+
+    <%= @experiment.observations%>
+
+  Results:
+
+    <%= @experiment.results%>
+
+  Conclusion:
+
+    <%= @experiment.conclusion%>
+
+
+
+
+  You can view your experiment information at this link: <%= @experiment_url %>
+
+
+  You can view the associated proposal at this link: <%= @proposal_url %>
