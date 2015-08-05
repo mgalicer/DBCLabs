@@ -26,9 +26,7 @@ class ExperimentsController < ApplicationController
       @experiment = @proposal.experiments.new(experiment_params)
       @experiment.experimenter = current_user
       if @experiment.save
-        p @proposal.hypothesis
-        p @experiment.title
-        LabstaffMailer.experiment_email(current_user, @proposal, @experiment).deliver_now
+        # LabstaffMailer.experiment_email(current_user, @proposal, @experiment).deliver_now
         redirect_to @experiment
       else
         render :new
