@@ -2,3 +2,42 @@
 {
    margin-top: 40px;
 }
+
+.info-titles
+{
+  color:#c62828;
+  font-size: 1em;
+}
+
+.author-text
+{
+  font-style: italic;
+  padding-top: 10px;
+}
+
+.exp-links
+{
+  text-decoration: underline;
+}
+
+
+.exp-links a:hover
+{
+  color: #90caf9;
+  padding-left: 5px;
+}
+
+.all-forms
+{
+  padding-top: 50px;
+  margin: 20px auto;
+  width:500px;
+  font-size: 1em;
+}
+
+.errors
+{
+  margin-top: 20px;
+  color: #c62828;
+}
+

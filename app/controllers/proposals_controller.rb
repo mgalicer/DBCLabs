@@ -6,8 +6,10 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = Proposal.find(params[:id])
+    user = User.find(session[:user_id])
     @experiments = @proposal.experiments.all
     @comments = @proposal.comments.all
+
   end
 
   def new

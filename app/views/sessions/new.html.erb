@@ -1,11 +1,21 @@
-<% if @errors %>
-  <%= @errors %>
-<% end %>
-
-<%= form_for :user, url: sessions_path do |f| %>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.label :password %><br>
-  <%= f.password_field :password %>
+<div class = "all-forms">
+  <h4>Login</h4>
+  <br>
+  <%= form_for :user, url: sessions_path do |f| %>
+  <div class = "input-field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class = "input-field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
   <%= f.submit "Login"%>
-<% end %>
+  <% end %>
+  <div class = "errors">
+  <% if @errors %>
+    <%= @errors %>
+  <% end %>
+  </div>
+
+</div>

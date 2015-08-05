@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
   before_action :find_user, except: [:new, :destroy]
 
   def new
-    p current_user
   end
 
   def create
@@ -18,7 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to experiments_path
+    redirect_to root_path
   end
 
   private

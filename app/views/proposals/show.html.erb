@@ -1,29 +1,37 @@
-<h3>Proposal Overview:</h3>
-<label>Proposal Title:</label>
-<p><%= @proposal.title %></p>
-<label>Hypothesis:</label>
+<br>
+<h5><%= @proposal.title %></h5>
+<p style = "color:grey;">by <%= @proposal.proposer.name %>&nbsp;|&nbsp;<%= @proposal.created_at.strftime("%F") %></p>
+<label class = "info-titles">Hypothesis:</label>
 <p><%= @proposal.hypothesis %></p>
-<label>Summary:</label>
+<label  class = "info-titles">Summary:</label>
 <p><%= @proposal.summary %></p>
   <div class="proposal-footer">
-    <label>Proposal Created at:</label>
-    <p><%= @proposal.created_at %></p>
-    <label>Proposer:</label>
-    <p><%= @proposal.proposer.name %></p>
-  </div>
 
+
+  </div>
+<br>
+<br>
 <% if @proposal.experiments.length > 0 %>
-  <h4>Current experiments based on this proposal:</h4>
-  <% @proposal.experiments.each do |experiment| %>
-    <%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %><br>
-  <% end %>
+  <h5>Current experiments on this proposal:</h5>
+  <div>
+    <% @proposal.experiments.each do |experiment| %>
+      <span class = "exp-links"><%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %></span>
+    <% end %>
+  </div>
 <% end %><br><br>
 
-<div id="new-experiment-link">
-  <%= link_to "Create New Experiment", new_proposal_experiment_path(@proposal) %>
-</div>
-
-<%= link_to "New comment", new_proposal_comment_path(@proposal) %>
-
+<% if current_user.user_type == "lab staff" %>
+  <div id="new-experiment-link">
+    <%= button_to "Create New Experiment", new_proposal_experiment_path(@proposal), :method => :get, class: "btn" %>
+  </div>
+<% end %>
+<br>
+<br>
+<h5>Comments</h5>
+<br>
+<% if @comments.length > 0 %>
+<%= button_to "New comment", new_proposal_comment_path(@proposal), :method => :get, class: "btn" %>
   <%= render partial: 'comments/show' %>
-
+<% else %>
+  <p>There are no comments yet.</p>
+<% end %>

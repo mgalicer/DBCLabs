@@ -3,29 +3,36 @@
 <p style = "color:grey;">by <%= @experiment.experimenter.name %>&nbsp;|&nbsp;<%= @experiment.created_at.strftime("%F") %></p>
 <p></p>
 <br>
-<label>Materials:</label>
-<p><%= @experiment.materials %></p>
-<label>Observations:</label>
+<label class = "info-titles">Materials:</label>
+<p ><%= @experiment.materials %></p>
+<label class = "info-titles">Observations:</label>
 <p><%= @experiment.observations %></p>
-<label>Results:</label>
+<label class = "info-titles">Results:</label>
 <p><%= @experiment.results %></p>
-<label>Conclusion:</label>
+<label class = "info-titles">Conclusion:</label>
 <p><%= @experiment.conclusion %></p>
-<label>Results:</label>
+<label class = "info-titles">Results:</label>
 <p><%= @experiment.results %></p>
 
 <div class="experiment-footer">
-  <label>This is based off of the following Proposal:</label>
+  <label class = "info-titles">This is based off of the following Proposal:</label>
   <p><%= @experiment.proposal.title %></p>
 </div>
 
 
 <br>
-<%= button_to "New comment", new_experiment_comment_path(@experiment), :method => :get, class: "comment btn" %>
+
+
+
+<h5>Comments</h5>
 <div class="hidden" id="new-form-container">
   <%= render partial: "comments/comment_form" %>
 </div>
 <div class="new-comment"></div>
-<h5>Comments</h5>
-<%= render partial: 'comments/show' %>
+<br>
+<% if @comments.length > 0 %>
+  <%= render partial: 'comments/show' %>
+<% else %>
+  <p>There are no comments yet.</p>
+<% end %>
 

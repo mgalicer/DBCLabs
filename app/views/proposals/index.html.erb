@@ -1,9 +1,10 @@
-<h3>Welcome to Washington University's Public Health Fund</h3>
-  <h4>List of All Proposals</h4>
+<br>
+<br>
+<h5>List of All Proposals</h5>
 
-   <ul id="proposal-list">
-  <% @proposals.each do |proposal| %>
-     <li><%= link_to proposal.title, proposal_path(proposal) %></li>
-   <% end %>
-   </ul>
+
+<% @proposals.each do |proposal| %>
+  <p><%= link_to proposal.title, proposal_path(proposal) %></p>
+<% end %>
+
 

@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validate :password_length
+  validates :email, format: {with: /\w*@(staff.wuphf.edu)/i }
 
   has_many :proposals, foreign_key: :proposer_id
   has_many :experiments, foreign_key: :experimenter_id

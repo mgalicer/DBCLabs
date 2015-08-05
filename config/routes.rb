@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
    # root 'proposals#index'
 
-    root 'experiments#index'
+    root 'welcome#index'
     resources :proposals do
       resources :experiments
     end

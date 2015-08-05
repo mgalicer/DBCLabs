@@ -1,29 +1,31 @@
 <% if @comments %>
-  <% @comments.each_with_index do |comment, i| %>
-    <% if i % 2 == 0 %>
+  <div id = "comment-container">
+    <% @comments.each_with_index do |comment, i| %>
+      <% if i % 2 == 0 %>
 
 
-    <div style="width:400px">
-      <div class="card #9e9e9e grey">
-        <div class="card-content white-text">
-          <p><%= comment.content %></p>
-          <p>by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <div style="width:400px">
+        <div class="card #9e9e9e grey">
+          <div class="card-content white-text">
+            <h6><%= comment.content %></h6>
+            <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <% else %>
+      <% else %>
 
-    <div style="width:400px">
-      <div class="card #e64a19 deep-orange darken-2">
-        <div class="card-content white-text">
-          <p><%= comment.content %></p>
-          <p>by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+      <div style="width:400px">
+        <div class="card #ef5350 red lighten-1">
+          <div class="card-content white-text">
+            <h6><%= comment.content %></h6>
+            <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p>
+          </div>
         </div>
       </div>
-    </div>
 
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 <% end %>
 

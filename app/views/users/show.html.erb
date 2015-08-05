@@ -1,32 +1,31 @@
-<divclass="container">
-  <h3>Welcome <%= current_user.name.capitalize %></h3>
-
-  <% if @proposals.length > 0 %>
-  <ul>
-    <h4>Your proposals</h4>
-    <% @proposals.each do |proposal| %>
-      <p><li><%= link_to proposal.title, proposal_path(proposal) %></li><p>
-    <% end %>
-
-  </ul>
+<br>
+<br>
+<h4>Welcome <%= current_user.name.capitalize %></h4>
+<% if @proposals.length > 0 %>
+<ul>
+  <h5>Your proposals</h5>
+  <% @proposals.each do |proposal| %>
+    <p><li><%= link_to proposal.title, proposal_path(proposal) %></li><p>
   <% end %>
-  <div id="new-proposal-link">
-  <% if current_user.user_type == "faculty" %>
-    <%= link_to "New Proposal", new_proposal_path %>
-  <% end %>
-  </div>
 
-  <br>
+</ul>
+<% end %>
+<div id="new-proposal-link">
+<% if current_user.user_type == "faculty" %>
+  <%= link_to "New Proposal", new_proposal_path %>
+<% end %>
+</div>
 
-  <% if @experiments.length > 0 %>
+<br>
+
+<% if @experiments.length > 0 %>
   <ul>
-    <h4>Your Experiments</h4>
+    <h5>Your Experiments</h5>
     <% @experiments.each do |experiment| %>
       <p><li><%= link_to experiment.title, proposal_experiment_path(experiment.proposal, experiment) %></li><p>
     <% end %>
 
   </ul>
-  <% end %>
+<% end %>
 
 
-</div>
