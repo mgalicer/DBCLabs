@@ -21,8 +21,8 @@
 
 
 <br>
-<%= link_to "New comment", new_experiment_comment_path(@experiment) %>
 <h5>Comments</h5>
+<%= button_to "New comment", new_experiment_comment_path(@experiment), :method => :get, class: "btn" %>
 <br>
 <% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>

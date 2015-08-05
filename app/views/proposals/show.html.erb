@@ -20,12 +20,18 @@
   </div>
 <% end %><br><br>
 
-<% if current_user.user_type = !"faculty" %>
+<% if current_user.user_type == "lab staff" %>
   <div id="new-experiment-link">
     <%= button_to "Create New Experiment", new_proposal_experiment_path(@proposal), :method => :get, class: "btn" %>
   </div>
 <% end %>
 
-<%= link_to "New comment", new_proposal_comment_path(@proposal) %>
-
+<%= button_to "New comment", new_proposal_comment_path(@proposal), :method => :get, class: "btn" %>
+<br>
+<h5>Comments</h5>
+<br>
+<% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>
+<% else %>
+  <p>There are no comments yet.</p>
+<% end %>

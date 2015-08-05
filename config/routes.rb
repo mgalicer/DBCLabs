@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
    # root 'proposals#index'
 
-    root 'sessions#new'
+    root 'welcome#index'
     resources :proposals do
       resources :experiments
     end

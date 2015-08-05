@@ -9,6 +9,7 @@ class ProposalsController < ApplicationController
     user = User.find(session[:user_id])
     @experiments = @proposal.experiments.all
     @comments = @proposal.comments.all
+
   end
 
   def new
