@@ -20,11 +20,12 @@
   </div>
 <% end %><br><br>
 
-<div id="new-experiment-link">
-  <%= button_to "Create New Experiment", new_proposal_experiment_path(@proposal), :method => :get, class: "btn" %>
-</div>
+<% if current_user.user_type = !"faculty" %>
+  <div id="new-experiment-link">
+    <%= button_to "Create New Experiment", new_proposal_experiment_path(@proposal), :method => :get, class: "btn" %>
+  </div>
+<% end %>
 
 <%= link_to "New comment", new_proposal_comment_path(@proposal) %>
 
   <%= render partial: 'comments/show' %>
-
