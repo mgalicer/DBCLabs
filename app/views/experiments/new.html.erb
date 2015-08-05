@@ -24,6 +24,11 @@
     </div>
 
     <div class="input-field">
+      <%= f.label :status %><br>
+      <%= f.select(:status, @status_options, {}, {class: "browser-default"}) %><br>
+    </div>
+
+    <div class="input-field">
       <%= f.label :results %><br>
       <%= f.text_field :results%>
     </div>

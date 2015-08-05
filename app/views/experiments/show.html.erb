@@ -3,6 +3,8 @@
 <p style = "color:grey;">by <%= @experiment.experimenter.name %>&nbsp;|&nbsp;<%= @experiment.created_at.strftime("%F") %></p>
 <p></p>
 <br>
+<label class = "info-titles">Status:</label>
+<p ><%= @experiment.status %></p>
 <label class = "info-titles">Materials:</label>
 <p ><%= @experiment.materials %></p>
 <label class = "info-titles">Observations:</label>

@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150803150153) do
     t.text     "observations"
     t.text     "results"
     t.text     "conclusion"
+    t.string   "status"
     t.integer  "proposal_id"
     t.integer  "experimenter_id"
     t.datetime "created_at",      null: false
