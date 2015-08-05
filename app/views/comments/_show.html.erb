@@ -54,7 +54,7 @@
                 <%  comment.comments.each do |comment| %>
                 <h6><%= comment.content %></h6>
               <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
-              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: " " %>
+              <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "button" %>
               <br>
               <br>
               <div id="sub-comment">
