@@ -2,14 +2,12 @@
   <div id = "comment-container">
     <% @comments.each_with_index do |comment, i| %>
       <% if i % 2 == 0 %>
-
-
       <div style="width:400px">
         <div class="card #9e9e9e grey">
           <div class="card-content white-text">
             <h6><%= comment.content %></h6>
             <p class = "author-text">by <%= comment.commenter.name %> | <%= comment.commenter.created_at.strftime("%F") %></p><br>
-            <%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %>
+            <div class="reply-button"><%= button_to "Reply", new_comment_comment_path(comment), :method => :get, class: "btn" %></div>
             <br>
             <br>
             <div id="sub-comment">
@@ -78,6 +76,10 @@
         </div>
       </div>
       <% end %>
+    <% end %>
+
+  </div>
+
 <% end %>
-<% end %>
+
 

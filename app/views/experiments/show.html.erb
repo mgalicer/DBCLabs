@@ -21,12 +21,14 @@
 
 
 <br>
+
 <h5>Comments</h5>
-<%= button_to "New comment", new_experiment_comment_path(@experiment), :method => :get, class: "btn" %>
-<br>
+<div class="hidden" id="new-form-container">
+  <%= render partial: "comments/comment_form", locals: { commentable: @experiment, comment: Comment.new } %>
+</div>
 <% if @comments.length > 0 %>
   <%= render partial: 'comments/show' %>
 <% else %>
   <p>There are no comments yet.</p>
 <% end %>
-
+<div class="new-comment"></div>

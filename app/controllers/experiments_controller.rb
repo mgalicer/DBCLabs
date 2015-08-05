@@ -1,4 +1,6 @@
 class ExperimentsController < ApplicationController
+  respond_to :html, :js
+
   def index
       @proposals = Proposal.all
       @experiments = Experiment.order("created_at DESC")
