@@ -7,20 +7,10 @@ class CommentsController < ApplicationController
   end
 
   def new
-    # @parent_comment =
-    # @proposal = Proposal.find(params[:proposal_id])
-    # @experiment = Experiment.find(params[:experiment_id])
     @commentable = find_commentable
-
-    # @comment = Comment.new
   end
 
   def create
-    # @parent = Experiment.find(params[:experiment_id]) if params[:experiment_id]
-    # @parent = Proposal.find(params[:proposal_id]) if params[:proposal_id]
-    # @parent = Comment.find(params[:comment_id]) if params[:comment_id]
-
-    # @comment = @parent.comments.new(params[:comment])
     @commentable = find_commentable
     @comment = @commentable.comments.build(comment_params)
     @comment.commenter = current_user
