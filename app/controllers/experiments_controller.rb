@@ -9,7 +9,6 @@ class ExperimentsController < ApplicationController
     end
 
     def show
-      # @proposal = Proposal.find(params[:proposal_id])
       @experiment = Experiment.find(params[:id])
       @comments = @experiment.comments
     end
@@ -26,7 +25,6 @@ class ExperimentsController < ApplicationController
       @experiment = @proposal.experiments.new(experiment_params)
       @experiment.experimenter = current_user
       if @experiment.save
-        # LabstaffMailer.experiment_email(current_user, @proposal, @experiment).deliver_now
         redirect_to @experiment
       else
         render :new
